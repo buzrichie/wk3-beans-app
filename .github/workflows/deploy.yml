@@ -26,7 +26,14 @@ jobs:
 
       # 4. Prepare source bundle
       - name: Zip application
-        run: zip -r app.zip target/*.jar Procfile
+        run:
+          mkdir -p application
+          cp target/*.jar application/
+          cp Procfile application/
+
+          cd application
+          zip -r ../app.zip .
+          
 
       # 5. Configure AWS credentials
       - name: Configure AWS credentials
