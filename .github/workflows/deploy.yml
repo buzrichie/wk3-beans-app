@@ -1,0 +1,63 @@
+name: Deploy to Elastic Beanstalk
+
+on:
+  push:
+    branches: [ "main" ]  
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout repo
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      # 2. Set up JDK
+      - name: Set up JDK 21
+        uses: actions/setup-java@v3
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      # 3. Build the app with Maven
+      - name: Build with Maven
+        run: mvn clean package -DskipTests
+
+      # 4. Prepare source bundle
+      - name: Zip application
+        run: |
+          mkdir -p application
+          cp target/*.jar application/
+          cp Procfile application/
+
+          cd application
+          zip -r ../app.zip .
+          
+
+      # 5. Configure AWS credentials
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      # 6. Upload to S3
+      - name: Upload to S3
+        run: aws s3 cp app.zip s3://${{ secrets.S3_BUCKET }}/app-${{ github.sha }}.zip
+
+      # 7. Create new application version in Beanstalk
+      - name: Create Elastic Beanstalk App Version
+        run: |
+          aws elasticbeanstalk create-application-version \
+            --application-name ${{ secrets.EB_APP_NAME }} \
+            --version-label $GITHUB_SHA \
+            --source-bundle S3Bucket=${{ secrets.S3_BUCKET }},S3Key=app-${{ github.sha }}.zip
+
+      # 8. Deploy new version to environment
+      - name: Update Elastic Beanstalk Environment
+        run: |
+          aws elasticbeanstalk update-environment \
+            --environment-name ${{ secrets.EB_ENV_NAME }} \
+            --version-label $GITHUB_SHA
