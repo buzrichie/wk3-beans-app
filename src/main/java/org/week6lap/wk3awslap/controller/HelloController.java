@@ -1,12 +1,21 @@
 package org.week6lap.wk3awslap.controller;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@Controller
 public class HelloController {
-    @GetMapping()
-    public String hello() {
-        return "Hello World";
+
+    @GetMapping("/")
+    public String index(Model model) {
+        model.addAttribute("message", "Hello from Spring Boot!");
+        return "index";
+    }
+
+    @GetMapping("/hello")
+    public String hello(Model model) {
+        model.addAttribute("greeting", "Hello, world! 🚀");
+        return "hello";
     }
 }

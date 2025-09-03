@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>My Spring Boot App</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body class="bg-light">
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="#">My Spring App</a>
+    </div>
+</nav>
+
+<header class="bg-white py-5 shadow-sm">
+    <div class="container text-center">
+        <h1 class="display-5 fw-bold text-primary">🚀 Welcome to My Spring Boot App</h1>
+        <p class="lead text-muted">Deployed on AWS Elastic Beanstalk</p>
+        <a href="/hello" class="btn btn-success btn-lg mt-3">Say Hello</a>
+    </div>
+</header>
+
+<section class="container py-5">
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100 text-center">
+                <div class="card-body">
+                    <h5 class="card-title text-primary">⚡ Fast</h5>
+                    <p class="card-text">Spring Boot is production-ready out of the box.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100 text-center">
+                <div class="card-body">
+                    <h5 class="card-title text-success">☁️ Cloud Ready</h5>
+                    <p class="card-text">Easily deployable to AWS Elastic Beanstalk.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100 text-center">
+                <div class="card-body">
+                    <h5 class="card-title text-danger">🎨 Modern UI</h5>
+                    <p class="card-text">Styled with Bootstrap 5 for responsive design.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="bg-primary text-white py-3 text-center">
+    <p class="mb-0">&copy; 2025 My Spring App | Powered by Java</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
