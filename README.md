@@ -18,7 +18,7 @@ It covers the full workflow:
 
 ## 🛠️ Tech Stack
 
-* **Java 17**
+* **Java 21**
 * **Spring Boot** (Web + Thymeleaf)
 * **Maven** (build tool)
 * **Bootstrap 5** (UI styling)
